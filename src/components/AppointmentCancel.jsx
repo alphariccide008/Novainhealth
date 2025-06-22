@@ -1,6 +1,6 @@
 import React from 'react'
 import { XCircleIcon } from '@heroicons/react/24/outline'
-import Cancel from '../assets/icons/Cancelicon.png'
+import Cancel from '../assets/icons/cancelicon.png'
 
 
 
