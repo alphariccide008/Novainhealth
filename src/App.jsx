@@ -34,7 +34,7 @@ import PatientBookings from "./pages/PatientSignup/PatientBookings";
 import RequestAppointments from "./pages/PatientSignup/RequestAppointment";
 import PatientMedia from "./pages/PatientSignup/SocialMedia";
 import PatientReset from "./pages/PatientSignup/ResetPassword";
-import PatientAppointments from "./pages/PatientSignup/patientAppointemnts";
+import PatientAppointments from "./pages/PatientSignup/PatientAppointemnts";
 import ProfileSetting from  "./pages/PatientSignup/ProfileSetting";
 import PatientViewAppointment from "./pages/PatientSignup/PatientViewAppointment";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
