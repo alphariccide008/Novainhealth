@@ -13,56 +13,56 @@ import { FaUserDoctor } from 'react-icons/fa6';
 const DocSideBar = () => {
   return (
     <>
-        <div className='poppins space-y-3 bg-white text-[18px] md:block hidden rounded w-1/3 h-[80%]'>
+        <div className='poppins space-y-3 bg-white text-[18px] md:block hidden rounded  h-[80%]'>
                     
                      
                     
-                      <div className='flex px-8 w-full text-[#757575]  py-3 '>
-                      <HomeIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Dashboard</Link>
+                      <div className='flex px-3 w-full text-[#757575]  py-3 '>
+                      <HomeIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Dashboard</Link>
                      
                       </div>
                     
-                      <div className='flex px-8 w-full text-[#757575] py-3'>
-                      <CalendarDaysIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Appointments</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3'>
+                      <CalendarDaysIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Appointments</Link>
                       </div>
                     
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <FaUserDoctor className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Doctors</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <FaUserDoctor className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Doctors</Link>
                       </div>
 
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <UserIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>My Patients</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <UserIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>My Patients</Link>
                       </div>
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <FaUserCircle className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Specialties</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <FaUserCircle className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Specialties</Link>
                       </div>
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <StarIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Reviews</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <StarIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Reviews</Link>
                      
                       </div>
                     
                      
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <ChartBarIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Transactions</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <ChartBarIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Transactions</Link>
                      
                       </div>
                     
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <DocumentTextIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Invoice Reports</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <DocumentTextIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Invoice Reports</Link>
                      
                       </div>
                     
-                      <div className='flex px-8 w-full text-[#757575] py-3 '>
-                      <CogIcon className="h-6 w-6 mr-5 " />
-                      <Link to="#" className='text-18px'>Settings</Link>
+                      <div className='flex px-3 w-full text-[#757575] py-3 '>
+                      <CogIcon className="h-5 w-5 mx-4 " />
+                      <Link to="#" className='text-[14px]'>Settings</Link>
                       </div>
                     
                      

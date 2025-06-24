@@ -38,6 +38,12 @@ import PatientAppointments from "./pages/PatientSignup/PatientAppointemnts";
 import ProfileSetting from  "./pages/PatientSignup/ProfileSetting";
 import PatientViewAppointment from "./pages/PatientSignup/PatientViewAppointment";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminAppointment from "./pages/Admin/AdminAppointment";
+import AdminDoctorList from "./pages/Admin/AdminDoctorList";
+import AdminSpecialty from "./pages/Admin/AdminSpecalty";
+import AdminPatientList from "./pages/Admin/AdminPatientList";
+import AdminInvoiceList from "./pages/Admin/AdminInvoiceList";
+import AdminReview from "./pages/Admin/AdminReview";
 
 
 
@@ -50,9 +56,7 @@ export default function App() {
      
       <Routes>
         <Route index element={<Home />} />
-        <Route path="patientsignup" element={<PatientSignup/>}/>
-        <Route path="patientemail" element={<PatientEmail/>}/>
-        <Route path="patientlogin" element={<PatientLogin/>}/>
+       
         {/* Apple login route */}
         <Route path="apple" element={<AppleLogin/>}/>
         {/* doctors route */}
@@ -82,6 +86,13 @@ export default function App() {
         <Route path="patientappointment" element={<PatientAppointments/>}/>
         <Route path="profilesetting" element={<ProfileSetting/>}/>
         <Route path="patientviewappointment" element={<PatientViewAppointment/>}/>
+        <Route path="patientsignup" element={<PatientSignup/>}/>
+        <Route path="patientemail" element={<PatientEmail/>}/>
+        <Route path="patientlogin" element={<PatientLogin/>}/>
+       
+
+
+        
 
 
 
@@ -104,9 +115,20 @@ export default function App() {
         <Route path="adminemail" element={<AdminEmail/>}/>
         <Route path="adminsignup" element={<AdminSignup/>}/>
         <Route path="admindashboard" element={<AdminDashboard/>}/>
+        <Route path="adminappointment" element={<AdminAppointment/>}/>
+        <Route path="admindoctorlist" element={<AdminDoctorList/>}/>
+        <Route path="adminspecialty" element={<AdminSpecialty/>}/>
+        <Route path="adminreview" element={<AdminReview/>}/>
+        <Route path="adminpatientlist" element={<AdminPatientList/>}/>
+        <Route path="admininvoicelist" element={<AdminInvoiceList/>}/>
+
+
+
+
+
 
         {/* General Login */}
-        <Route path="Genlogin" element={<GenLogin/>}/>
+        <Route path="genlogin" element={<GenLogin/>}/>
 
         {/* dashboard Routes */}
         <Route path="dashboard" element={<PatientDashboard/>}/>

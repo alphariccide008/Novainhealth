@@ -17,11 +17,11 @@ const GenLogin = () => {
                             <div className="flex justify-between pb-[10%] md:px-20">
                             <div className="border text-center hover:text-white  hover:bg-[#46B8E3] border-[#46B8E3] mx-2 md:w-1/2 rounded p-2 cursor-pointer ">
                                 <Link to="/doctorlogin"  className="text-[10px] md:text-[14px]  text-gray-700 hover:text-white   text-center">
-                                I am seeking a Medical Professional
+                                I am  a Medical Professional
                                 </Link>
                             </div>
                             <div className="border text-center border-gray-300 mx-2 md:w-1/2 rounded p-2 cursor-pointer  text-white bg-[#46B8E3]">
-                                <Link to="/doctorlogin"  className="text-[10px] md:text-[14px]  text-gray-700 text-white text-center ">
+                                <Link to="/patientlogin"  className="text-[10px] md:text-[14px]  text-white text-center ">
                                 I am seeking a Medical Professional
                                 </Link>
                             </div>

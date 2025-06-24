@@ -21,7 +21,7 @@ const PatientSignup = () => {
                             <div className=" pt-10 w-full">
                                 <h1 className="font-semibold text-[24px]">Login</h1>
                                 
-                                <h1 className='py-10 text-[16px]'>Hello Doc, welcome back!</h1>
+                                <h1 className='py-10 text-[16px]'>Hello there, welcome back!</h1>
                             </div>
                             <div className="flex items-center justify-center h-full w-full">
                                 <div className="relative">
@@ -64,7 +64,7 @@ const PatientSignup = () => {
                             </div>
 
 
-                            <div className=" text-center  pt-10 pb-16 space-x-2 text-left text-sm">
+                            <div className=" text-center  pt-10 pb-16 space-x-2 md:text-left text-sm">
                             
                             Not you? <Link to="/patientsignup" className='text-[#46B8E3]' >Use another account</Link>
                             </div>

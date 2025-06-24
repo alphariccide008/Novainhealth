@@ -47,7 +47,7 @@ const NavBar = () => {
         <div className="flex gap-10 max-xl:hidden text-sm">
          
           <Link
-            to='/patientsignup'
+            to='/genlogin'
             className="flex items-center py-3 px-12 text-white  bg-[#46B8E3] rounded-lg uppercase hover:bg-[#003366] hover:text-white"
           >
             LOGIN/SIGNUP
@@ -91,7 +91,7 @@ const NavBar = () => {
 
             <div className="flex flex-col gap-2 w-full">
               <Link
-                to='/patientsignup'
+                to='/genlogin'
                 className="w-full flex items-center py-3 px-4 mb-6 text-blue  bg-[#46B8E3] text-white rounded-lg uppercase hover:bg-[#003366] hover:text-white text-center"
               >
                 LOGIN/SIGNUP
