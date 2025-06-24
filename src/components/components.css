@@ -58,3 +58,15 @@
 .test3{
   background-color: rgba(2, 17, 64, 0.244);
 }
+.eye{
+  background-color: rgba(70, 185, 227, 0.211);
+}
+.accept{
+  background-color: rgba(11, 110, 79, 0.358);
+}
+.cancel{
+  background-color: rgba(197, 33, 132, 0.339);
+}
+.status{
+  background-color: rgba(11, 110, 79, 0.7);
+}

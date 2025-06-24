@@ -29,23 +29,23 @@ const PatientSignup = () => {
 
                             <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white ">
                                 < input
-                                    className="text-[14px] flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]" placeholder='Name'
+                                    className="md:text-[14px] flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]" placeholder='Name'
                                 />
                             </div>
                             <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white ">
                                 < input
-                                    className="text-[14px] w-full flex items-center justify-center text-gray-700 hover:text-white text-[10px]" placeholder='Mobile Number'
+                                    className="md:text-[14px] w-full flex items-center justify-center text-gray-700 hover:text-white text-[10px]" placeholder='Mobile Number'
                                 />
                             </div>
                             <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white ">
                                 < input
-                                    className="text-[14px] w-full flex items-center justify-center text-gray-700 hover:text-white text-[10px]" type='email' placeholder='Email Address'
+                                    className="md:text-[14px] w-full flex items-center justify-center text-gray-700 hover:text-white text-[10px]" type='email' placeholder='Email Address'
                                 />
                             </div>
                             
                             <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white ">
                                 < input
-                                    className="text-[14px] w-full flex items-center justify-center text-gray-700 hover:text-white text-[10px]" type='password' placeholder='Password'
+                                    className="md:text-[14px] w-full flex items-center justify-center text-gray-700 hover:text-white text-[10px]" type='password' placeholder='Password'
                                 />
                             </div>
                            

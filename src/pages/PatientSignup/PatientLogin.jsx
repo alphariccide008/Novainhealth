@@ -21,7 +21,7 @@ const PatientSignup = () => {
                             <div className=" pt-10 w-full">
                                 <h1 className="font-semibold text-[24px]">Login</h1>
                                 
-                                <h1 className='py-10 text-[16px]'>Hello Doc, welcome back!</h1>
+                                <h1 className='py-10 text-[16px]'>Hello there, welcome back!</h1>
                             </div>
                             <div className="flex items-center justify-center h-full w-full">
                                 <div className="relative">
