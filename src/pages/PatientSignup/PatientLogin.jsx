@@ -64,7 +64,7 @@ const PatientSignup = () => {
                             </div>
 
 
-                            <div className=" text-center  pt-10 pb-16 space-x-2 text-left text-sm">
+                            <div className=" text-center  pt-10 pb-16 space-x-2 md:text-left text-sm">
                             
                             Not you? <Link to="/patientsignup" className='text-[#46B8E3]' >Use another account</Link>
                             </div>
