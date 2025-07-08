@@ -44,6 +44,7 @@ import AdminSpecialty from "./pages/Admin/AdminSpecalty";
 import AdminPatientList from "./pages/Admin/AdminPatientList";
 import AdminInvoiceList from "./pages/Admin/AdminInvoiceList";
 import AdminReview from "./pages/Admin/AdminReview";
+import ApiSpecViewer from "./pages/home/ApiSPecViewer";
 
 
 
@@ -91,7 +92,7 @@ export default function App() {
         <Route path="patientlogin" element={<PatientLogin/>}/>
        
 
-
+        <Route path="spec" element={<ApiSpecViewer />} />
         
 
 
