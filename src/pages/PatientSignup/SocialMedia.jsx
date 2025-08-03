@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { useApiIntegration } from '../../hooks/useApiIntegration'
+import toast from 'react-hot-toast'
 import '../../components/components.css'
 import PatientSidebar from '../../components/PatientSidebar'
 import Image from '../../assets/images/googlelog.png'
@@ -23,6 +25,37 @@ import { FaUserCircle } from 'react-icons/fa';
 
 const PatientDashboard = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [facebookURL, setFacebookURL] = useState('');
+    const [twitterURL, setTwitterURL] = useState('');
+    const [instagramURL, setInstagramURL] = useState('');
+    const [pinterestURL, setPinterestURL] = useState('');
+    const [linkedinURL, setLinkedinURL] = useState('');
+    const [youtubeURL, setYoutubeURL] = useState('');
+    const { api } = useApiIntegration()
+
+    const handleSubmit = async () => {
+        try {
+            const payload = {
+                facebook: facebookURL,
+                twitter: twitterURL,
+                instagram: instagramURL,
+                pinterest: pinterestURL,
+                linkedin: linkedinURL,
+                youtube: youtubeURL
+            };
+
+            const response = await api.put('/api/patient/social-media', payload);
+
+            if (response.status === 200) {
+                toast.success('Social media links updated successfully!');
+            } else {
+                toast.error('Failed to update social media links.');
+            }
+        } catch (error) {
+            console.error('Error updating social media links:', error);
+            toast.error('Error updating social media links.');
+        }
+    };
   return (
     <>
     <div
@@ -53,71 +86,71 @@ const PatientDashboard = () => {
       {/* Dropdown Menu */}
       {menuOpen && (
          <div className=' w-full md:hidden rounded flex'>
-       
-      
-         
+
+
+
          <div className=' px-[] text-[#757575]  py-3 '>
-         
+
          <Link to="#" className='text-18px'>
          <HomeIcon className="h-4 w-4 mr-5 " />
          </Link>
-        
+
          </div>
-       
+
          <div className=' px-[]  text-[#757575] py-3'>
-         
+
          <Link to="#" className='text-18px'>
          <CalendarDaysIcon className="h-4 w-4 mr-5 " />
          </Link>
          </div>
-         
+
          <div className='px-[]  text-[#757575] py-3 '>
-         
+
          <Link to="#" className='text-18px'>
          <FaUserDoctor className="h-4 w-4 mr-5 " />
          </Link>
          </div>
-         
+
          <div className=' px-[10px]  text-[#757575]  py-3 '>
-         
+
          <Link to="#" className='text-18px'>
-         <img src={PatientEmerg} className='h-4 w-4' alt="" />
+          <img src={PatientEmerg} className='h-4 w-4' alt="" />
          </Link>
          </div>
-         
+
          <div className=' px-[10px] flex text-[#757575] py-3 '>
-         
+
          <Link to="#" className='text-18px'>
           <img src={Union} className='w-4 h-4' alt="" />
          </Link>
-        
+
          </div>
-         
-        
-        
+
+
+
          <div className=' px-[]  text-[#757575] py-3 '>
          <ChatBubbleLeftRightIcon className="h-4 w-4 mr-5 " />
-        
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575] py-3 '>
          <FaUserCircle className="h-4 w-4 mr-5 " />
-         
+
          </div>
-         
-         <div className=' px-[]  text-[#757575]  py-3 '>
+
+         <div className=' px-[]  text-[#757575] py-3 '>
          <ShareIcon className="h-4 w-4 mr-5 " />
-         
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575] py-3 '>
          <LockClosedIcon className="h-4 w-4 mr-5 " />
-        
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575] py-3'>
          <ArrowRightOnRectangleIcon className="h-4 w-4 mr-5 " />
-         
+
          </div>
 
      </div>
@@ -131,7 +164,7 @@ const PatientDashboard = () => {
         </h1>
       </div>
     </div>
-        
+
         <div className="md:flex px-3 poppins pt-[35%] md:pt-[21%]">
             <div className="flex-col">
                 <PatientSidebar/>
@@ -170,42 +203,42 @@ const PatientDashboard = () => {
                         <p>20th October 1991</p>
                     </div>
                     </div>
-                   
+
                 </div>
                 <div className='mb-10 mt-5 flex w-full justify-center  items-center'>
                         <Link to='' className='text-white text-[12px] rounded py-2 px-8 bg-[#46B8E3] '> Read More </Link>
                     </div>
             </div>
             <div className="flex-col md:w-1/3 ">
-                <form action="" className='space-y-9 text-[16px]'>
+                <form onSubmit={handleSubmit} className='space-y-9 text-[16px]'>
                     <div>
                         <label htmlFor="">Facebook URL</label><br />
-                        <input type="text"  className='border w-full py-2'/>
+                        <input type="text" value={facebookURL} onChange={(e) => setFacebookURL(e.target.value)} className='border w-full py-2'/>
                     </div>
                     <div>
                         <label htmlFor="">Twitter URL</label><br />
-                        <input type="text"  className='border w-full py-2'/>
+                        <input type="text"  value={twitterURL} onChange={(e) => setTwitterURL(e.target.value)} className='border w-full py-2'/>
                     </div>
                     <div>
                         <label htmlFor="">Instagram URL</label><br />
-                        <input type="text"  className='border w-full py-2'/>
+                        <input type="text" value={instagramURL} onChange={(e) => setInstagramURL(e.target.value)} className='border w-full py-2'/>
                     </div>
                     <div>
                         <label htmlFor="">Pinterest URL</label><br />
-                        <input type="text"  className='border w-full py-2'/>
+                        <input type="text" value={pinterestURL} onChange={(e) => setPinterestURL(e.target.value)} className='border w-full py-2'/>
                     </div>
                     <div>
                         <label htmlFor="">Linkdelin URL</label><br />
-                        <input type="text"  className='border w-full py-2'/>
+                        <input type="text" value={linkedinURL} onChange={(e) => setLinkedinURL(e.target.value)} className='border w-full py-2'/>
                     </div>
                     <div>
                         <label htmlFor="">Youtube URL</label><br />
-                        <input type="text"  className='border w-full py-2'/>
+                        <input type="text" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} className='border w-full py-2'/>
                     </div>
                     <div>
-                        <Link to='' className='bg-[#46B8E3] text-white text-[12px] rounded px-10 py-3'>
+                        <button type="submit" className='bg-[#46B8E3] text-white text-[12px] rounded px-10 py-3'>
                             Save Changes
-                        </Link>
+                        </button>
                     </div>
                 </form>
             </div>

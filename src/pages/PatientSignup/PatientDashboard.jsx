@@ -22,6 +22,7 @@ import { FaUserCircle } from 'react-icons/fa';
 
 
 const PatientDashboard = () => {
+    const user = JSON.parse(localStorage.getItem("userData")) || {};
     const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
@@ -142,7 +143,7 @@ const PatientDashboard = () => {
                     <img src={Image} className='h-[135px] w-[135px] rounded-full' alt="" />
                 </div>
                 <div className="text-center leading-[250%]">
-                    <p className='text-[18px]'>Tosin Chukwuka</p>
+                    <p className='text-[18px]'>{user.firstName ? `${user.firstName} ${user.lastName}` : ''}</p>
                     <p className='text-[#757575] text-[16px]'>PT00136</p>
                     <p className='text-[12px]'>Membership Plan || <span className='text-[#757575]'>Basic</span></p>
                 </div>
@@ -160,9 +161,9 @@ const PatientDashboard = () => {
                         <p>DOB </p>
                     </div>
                     <div className="flex-col md:ml-0 ml-12 text-[#757575] text-[12px] md:w-1/2">
-                        <p>Male</p>
-                        <p>O+ (Positive)</p>
-                        <p>Milk, Penicilin</p>
+                        <p>{user.gender}</p>
+                        <p>{user.bloodGroup ? `${user.bloodGroup} ` : 'No Data'}</p>
+                        <p>{user.allergies ? `${user.allergies} ` : 'No Data'}</p>
                         <p>Diabetes, Blood Disorders</p>
                         <p>1.78m</p>
                         <p>00016</p>

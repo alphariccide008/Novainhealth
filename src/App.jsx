@@ -45,6 +45,7 @@ import AdminPatientList from "./pages/Admin/AdminPatientList";
 import AdminInvoiceList from "./pages/Admin/AdminInvoiceList";
 import AdminReview from "./pages/Admin/AdminReview";
 import ApiSpecViewer from "./pages/home/ApiSPecViewer";
+import  DoctorMessages  from "./pages/DoctorSignup/Chat";
 
 
 
@@ -65,6 +66,7 @@ export default function App() {
         <Route path="doctoremail" element={<DoctorEmail/>}/>
         <Route path="doctorlogin" element={<DoctorLogin/>}/>
         <Route path="doctorpatient" element={<DoctorPatients/>}/>
+        <Route path="doctormessage" element={<DoctorMessages/>}/>
         <Route path="doctorschedule" element={<DoctorSchedule/>}/>
         <Route path="consultationPayments" element={<ConsultationPayments/>}/>
         <Route path="Changepassword" element={<ChangePassword/>}/>
@@ -93,6 +95,9 @@ export default function App() {
        
 
         <Route path="spec" element={<ApiSpecViewer />} />
+
+        {/* <Route path="/" element={<Redirector />} /> */}
+
         
 
 

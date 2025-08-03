@@ -1,12 +1,49 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 import  Logo from '../../../public/Vector.png'
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { BeakerIcon , EnvelopeIcon } from '@heroicons/react/24/solid'
 import Patientsignup from '../../assets/images/patientsignup.png'
+import { useAuth } from '../../context/AuthContext';
+import { useApiIntegration } from '../../hooks/useApiIntegration';
 
 const PatientSignup = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { signup } = useAuth();
+  const navigate = useNavigate();
+  const { googleLogin, appleLogin } = useApiIntegration();
+
+  const handleEmailSignup = () => {
+    navigate('/patientemail');
+  };
+
+  const handleGoogleSignup = async () => {
+    try {
+      setLoading(true);
+      await googleLogin();
+      // After successful OAuth, navigate or update state
+      navigate('/dashboard'); //Example
+    } catch (err) {
+      setError('Google sign-up failed: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAppleSignup = async () => {
+    try {
+      setLoading(true);
+      await appleLogin();
+      // After successful OAuth, navigate or update state
+      navigate('/dashboard'); //Example
+    } catch (err) {
+      setError('Apple sign-up failed: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
         <section>
@@ -20,35 +57,38 @@ const PatientSignup = () => {
                             <img src={Logo} alt="Logo" className="mx-auto mt-[10%] h-[70px] lg:h-[100px]" />
                             <h1 className="text-2xl py-8 font-bold text-[24px]">Create an account</h1>
 
-                            <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white hover:bg-[#46B8E3]">
-                                <Link
-                                    to="/patientlogin"
-                                    className="text-[14px] flex items-center justify-center text-gray-700 hover:text-white text-center"
-                                >
+                            {error && (
+                                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                    {error}
+                                </div>
+                            )}
+
+                            {loading && (
+                                <div className="text-center py-4">
+                                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#46B8E3]"></div>
+                                </div>
+                            )}
+
+                            <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white hover:bg-[#46B8E3]" onClick={handleGoogleSignup}>
+                                <div className="text-[14px] flex items-center justify-center text-gray-700 hover:text-white text-center">
                                     <FcGoogle className="h-[20px] w-[20px] mr-2" />
                                     Continue with Google
-                                </Link>
+                                </div>
                             </div>
-                            <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white hover:bg-[#46B8E3]">
-                                <Link
-                                    to="/apple"
-                                    className="text-[14px] flex items-center justify-center text-gray-700 hover:text-white text-center"
-                                >
+                            <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white hover:bg-[#46B8E3]" onClick={handleAppleSignup}>
+                                <div className="text-[14px] flex items-center justify-center text-gray-700 hover:text-white text-center">
                                     <FaApple className="h-[20px] w-[20px] mr-2" />
                                     Continue with Apple
-                                </Link>
+                                </div>
                             </div>
-                           
-                            <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white hover:bg-[#46B8E3]">
-                                <Link
-                                    to="/patientemail"
-                                    className="text-[14px] flex items-center justify-center text-gray-700 hover:text-white text-center"
-                                >
+
+                            <div className="border border-gray-300 rounded p-2 cursor-pointer bg-white hover:bg-[#46B8E3]" onClick={handleEmailSignup}>
+                                <div className="text-[14px] flex items-center justify-center text-gray-700 hover:text-white text-center">
                                     <EnvelopeIcon className="h-[20px] w-[20px] mr-2" />
                                     Continue with Email
-                                </Link>
+                                </div>
                             </div>
-                            
+
 
                             <div className="flex items-start py-3 space-x-2 text-left text-sm">
                             <input type="checkbox" className="w-5 mt-3 mr-2 h-5 scale-150 accent-blue-500" />
@@ -72,7 +112,7 @@ const PatientSignup = () => {
                                 <a href="">Cookies setting</a>
                             </div>
                         </form>
-                                            
+
                     </div>
                 </div>
             </div>

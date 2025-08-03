@@ -36,25 +36,25 @@ const profiles = [
     header:'Standard Theatre'
   },
    {
-    id: 1,
+    id: 5,
     image: Wheels,
     alt:'consulting',
     header: 'Consluting Room'
   },
   {
-    id: 2,
+    id: 6,
     image: Icu,
     alt:'icu',
     header:'ICU'
   },
   {
-    id: 3,
+    id: 7,
     image: Mri,
     alt:'Mri Testing',
     header:'MRI Testing Facility'
   },
   {
-    id: 4,
+    id: 8,
     image: Theatre,
     alt:'emergency',
     header:'Standard Theatre'
