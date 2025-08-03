@@ -8,8 +8,8 @@ const DoctorPatients = () => {
 
         <div  className=" relative text-white px-[4%] lg:px-[7%] md:pt-[10%] pt-[25%] lg:pb-5"
             style={{ position: "fixed", width: "100%", backgroundColor: "#021140", minHeight:"100px",  }}>
-            <h3 className='pt-3 text-[12px] md:text-14px'>Home / Change Password</h3>
-            <h1 className='text-[22px] md:text-[24px]  py-2 font-semibold'>Change Password</h1>
+            <h3 className='pt-3 text-[12px] md:text-14px'>Home /  Social Media</h3>
+            <h1 className='text-[22px] md:text-[24px]  py-2 font-semibold'>Social Media</h1>
         </div>
         <section className='md:py-[20%]  lg:top-[15%]  py-[50%] w-full bg-[#e2e2e2]'>
         <div className="flex mx-[2%]  ">

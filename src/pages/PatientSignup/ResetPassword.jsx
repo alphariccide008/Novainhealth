@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { useApiIntegration } from '../../hooks/useApiIntegration'
+import toast from 'react-hot-toast'
 import '../../components/components.css'
 import PatientSidebar from '../../components/PatientSidebar'
 import Image from '../../assets/images/googlelog.png'
@@ -23,6 +25,34 @@ import { FaUserCircle } from 'react-icons/fa';
 
 const PatientDashboard = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+  const [resetPassword, setResetPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const { resetPatientPassword } = useApiIntegration()
+  const handleSaveNewPassword = async () => {
+    if (newPassword !== confirmPassword) {
+      toast.error('New password and confirm password do not match.');
+      return;
+    }
+
+    try {
+      const response = await resetPatientPassword({
+        resetPassword,
+        newPassword,
+        confirmPassword,
+      });
+
+      if (response.success) {
+        toast.success('Password reset successfully!');
+      } else {
+        toast.error(response.message || 'Failed to reset password.');
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      toast.error('An unexpected error occurred.');
+    }
+  };
+
   return (
     <>
     <div
@@ -53,71 +83,71 @@ const PatientDashboard = () => {
       {/* Dropdown Menu */}
       {menuOpen && (
          <div className=' w-full md:hidden rounded flex'>
-       
-      
-         
+
+
+
          <div className=' px-[] text-[#757575]  py-3 '>
-         
+
          <Link to="#" className='text-18px'>
          <HomeIcon className="h-4 w-4 mr-5 " />
          </Link>
-        
+
          </div>
-       
+
          <div className=' px-[]  text-[#757575] py-3'>
-         
+
          <Link to="#" className='text-18px'>
          <CalendarDaysIcon className="h-4 w-4 mr-5 " />
          </Link>
          </div>
-         
+
          <div className='px-[]  text-[#757575] py-3 '>
-         
+
          <Link to="#" className='text-18px'>
          <FaUserDoctor className="h-4 w-4 mr-5 " />
          </Link>
          </div>
-         
+
          <div className=' px-[10px]  text-[#757575]  py-3 '>
-         
+
          <Link to="#" className='text-18px'>
-         <img src={PatientEmerg} className='h-4 w-4' alt="" />
+          <img src={PatientEmerg} className='h-4 w-4' alt="" />
          </Link>
          </div>
-         
+
          <div className=' px-[10px] flex text-[#757575] py-3 '>
-         
+
          <Link to="#" className='text-18px'>
           <img src={Union} className='w-4 h-4' alt="" />
          </Link>
-        
+
          </div>
-         
-        
-        
+
+
+
          <div className=' px-[]  text-[#757575] py-3 '>
          <ChatBubbleLeftRightIcon className="h-4 w-4 mr-5 " />
-        
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575] py-3 '>
          <FaUserCircle className="h-4 w-4 mr-5 " />
-         
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575]  py-3 '>
          <ShareIcon className="h-4 w-4 mr-5 " />
-         
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575] py-3 '>
          <LockClosedIcon className="h-4 w-4 mr-5 " />
-        
+
          </div>
-         
+
          <div className=' px-[]  text-[#757575] py-3'>
          <ArrowRightOnRectangleIcon className="h-4 w-4 mr-5 " />
-         
+
          </div>
 
      </div>
@@ -131,7 +161,7 @@ const PatientDashboard = () => {
         </h1>
       </div>
     </div>
-        
+
         <div className="md:flex px-3 poppins pt-[35%] md:pt-[21%]">
             <div className="flex-col">
                 <PatientSidebar/>
@@ -170,7 +200,7 @@ const PatientDashboard = () => {
                         <p>20th October 1991</p>
                     </div>
                     </div>
-                   
+
                 </div>
                 <div className='mb-10 mt-5 flex w-full justify-center  items-center'>
                         <Link to='' className='text-white text-[12px] rounded py-2 px-8 bg-[#46B8E3] '> Read More </Link>
@@ -181,11 +211,23 @@ const PatientDashboard = () => {
                 <p className='text-[12px] text-[#757575]'>For security reasons, please create a strong password with a mix of letters, numbers, and special characters.</p>
                 <form action="" className='space-y-9 text-[16px]'>
                     <div>
-                       
-                        <input type="text"  className='border w-full px-4 py-2' placeholder='Reset Password'/>
+
+                        <input
+                          type="password"
+                          className='border w-full px-4 py-2'
+                          placeholder='Reset Password'
+                          value={resetPassword}
+                          onChange={(e) => setResetPassword(e.target.value)}
+                        />
                     </div>
                     <div>
-                        <input type="text"  className='border w-full px-4 py-2' placeholder='New Password'/>
+                        <input
+                           type="password"
+                          className='border w-full px-4 py-2'
+                          placeholder='New Password'
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                        />
                     </div>
                    <div className="flex gap-5 text-[10px] text-[#757575]">
                         <div className="flex-col ">
@@ -226,17 +268,27 @@ const PatientDashboard = () => {
                         </div>
                    </div>
                    <div className='pb-10'>
-                       
-                       <input type="text"  className='border w-full px-4 py-2' placeholder='Confirm Password'/>
+
+                       <input
+                          type="password"
+                          className='border w-full px-4 py-2'
+                          placeholder='Confirm Password'
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
                    </div>
                     <div className='gap-4 w-full pb-10 flex justify-center'>
                     <Link to='' className='border-[#46B8E3] text-[#46B8E3] border  text-[12px] rounded px-10 py-3'>
                             Cancel
                         </Link>
-                        <Link to='' className='bg-[#46B8E3] text-white text-[12px] rounded px-10 py-3'>
+                        <button
+                           type="button"
+                          onClick={handleSaveNewPassword}
+                          className='bg-[#46B8E3] text-white text-[12px] rounded px-10 py-3'
+                        >
                             Save New Password
-                        </Link>
-                       
+                        </button>
+
                     </div>
                 </form>
             </div>

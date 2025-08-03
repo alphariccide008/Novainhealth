@@ -1,0 +1,1791 @@
+{
+	"info": {
+		"_postman_id": "33f6390e-baca-4fcf-8249-d532c17a54cd",
+		"name": "Novain Health API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34550889"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Checker\",\r\n  \"email\": \"fsmaok112@gmail.com\",\r\n  \"password\": \"password\",\r\n  \"roleKey\": \"patient\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/signup",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verifyemail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"fsmaok112@gmail.com\",\r\n  \"token\": \"1Ew3VE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/verify-email",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"verify-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TriggerVerifyEmail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"bola@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/trigger-verify-email",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"trigger-verify-email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"fsmaok112@gmail.com\",\r\n  \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/login",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ForgetPassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"bola@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/forget-password",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"forget-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ForgetPasswordReset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"bola@gmail.com\",\r\n  \"newPassword\": \"password\",\r\n  \"token\": \"G53ej4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/forgot-password-reset",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"forgot-password-reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ResetPassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"newPassword\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/reset-password",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TriggerVerifySms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"phone\": {\r\n    \"countryCode\": 1,\r\n    \"phoneNumber\": 555123456\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/trigger-verify-sms",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"trigger-verify-sms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifySms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"phone\": {\r\n    \"countryCode\": 1,\r\n    \"phoneNumber\": 555123456\r\n  },\r\n  \"token\": \"123abc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/auth/verify-sms",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"auth",
+						"verify-sms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mypatients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/profile/doctor/my-patients?page=1&limit=15&search=john",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"profile",
+						"doctor",
+						"my-patients"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "15"
+						},
+						{
+							"key": "search",
+							"value": "john"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/profile/doctor/transactions",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"profile",
+						"doctor",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NewPatient",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"lastName\": \"string\",\r\n  \"phone\": {\r\n    \"countryCode\": 0,\r\n    \"phoneNumber\": 0\r\n  },\r\n  \"gender\": \"MALE\",\r\n  \"dateOfBirth\": \"2025-06-26T21:40:52.802Z\",\r\n  \"address\": {\r\n    \"street\": \"string\",\r\n    \"city\": \"string\",\r\n    \"state\": \"string\",\r\n    \"country\": \"string\"\r\n  },\r\n  \"maritalStatus\": \"SINGLE\",\r\n  \"profilePhoto\": \"string\",\r\n  \"healthProfile\": {\r\n    \"bloodGroup\": \"A_POSITIVE\",\r\n    \"genotype\": \"AA\",\r\n    \"height\": \"string\",\r\n    \"weight\": \"string\",\r\n    \"allergies\": [\r\n      \"string\"\r\n    ]\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/profile/patient",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"profile",
+						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateDocProfile",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"lastName\": \"string\",\r\n  \"phone\": {\r\n    \"countryCode\": 0,\r\n    \"phoneNumber\": 0\r\n  },\r\n  \"gender\": \"MALE\",\r\n  \"dateOfBirth\": \"2025-06-27T17:34:43.073Z\",\r\n  \"address\": {\r\n    \"street\": \"string\",\r\n    \"city\": \"string\",\r\n    \"state\": \"string\",\r\n    \"country\": \"string\"\r\n  },\r\n  \"maritalStatus\": \"SINGLE\",\r\n  \"profilePhoto\": \"string\",\r\n  \"aboutMe\": \"string\",\r\n  \"clinicInfo\": {\r\n    \"clinicName\": \"string\",\r\n    \"clinicAddress\": \"string\",\r\n    \"clinicImages\": [\r\n      \"string\"\r\n    ]\r\n  },\r\n  \"contactDetails\": \"string\",\r\n  \"pricing\": \"string\",\r\n  \"consultationFees\": {\r\n    \"textConsultation\": 2000,\r\n    \"audioConsultation\": 3500,\r\n    \"videoConsultation\": 5000,\r\n    \"followUpConsultation\": 1500,\r\n    \"emergencyConsultation\": 8000\r\n  },\r\n  \"servicesAndSpecialization\": [\r\n    \"string\"\r\n  ],\r\n  \"socialMediaProfiles\": [\r\n    {\r\n      \"platform\": \"string\",\r\n      \"handle\": \"string\",\r\n      \"url\": \"string\"\r\n    }\r\n  ],\r\n  \"areaOfSpecialisation\": \"string\",\r\n  \"education\": [\r\n    {\r\n      \"yearStarted\": 0,\r\n      \"yearFinished\": 0,\r\n      \"college\": \"string\",\r\n      \"degree\": \"string\"\r\n    }\r\n  ],\r\n  \"awards\": [\r\n    {\r\n      \"nameOfAward\": \"string\",\r\n      \"year\": 0\r\n    }\r\n  ],\r\n  \"memberships\": [\r\n    {\r\n      \"nameOfOrganisation\": \"string\"\r\n    }\r\n  ],\r\n  \"registrationAndLicenses\": [\r\n    {\r\n      \"registration\": \"string\",\r\n      \"year\": 0,\r\n      \"documentImage\": \"string\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/profile/doctor",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"profile",
+						"doctor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultationfee",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"textConsultation\": 2000,\r\n  \"audioConsultation\": 3500,\r\n  \"videoConsultation\": 5000,\r\n  \"followUpConsultation\": 1500,\r\n  \"emergencyConsultation\": 8000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/profile/doctor/consultation-fees",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"profile",
+						"doctor",
+						"consultation-fees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallettopup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string\",\r\n  \"amount\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/profile/top-up-wallet",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"profile",
+						"top-up-wallet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallettopupinitialize",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 5000,\r\n  \"metadata\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/wallet/top-up/initialize",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"top-up",
+						"initialize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verifywallettopup",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"reference\": \"ref_123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/wallet/top-up/verify",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"top-up",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PayService",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"recipientId\": \"60d5ecb54b24a1234567890a\",\r\n  \"amount\": 2000,\r\n  \"description\": \"Consultation fee for Dr. John Doe\",\r\n  \"metadata\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/wallet/pay-service",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"pay-service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "payrequest",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"amount\": 10000,\r\n  \"accountNumber\": \"0123456789\",\r\n  \"bankCode\": \"044\",\r\n  \"accountName\": \"Dr. John Doe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/wallet/payout/request",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"payout",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "walletbalance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/wallet/balance",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallettransactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/wallet/transactions?page=1&limit=20",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "walletpayoutverify",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/wallet/payout/verify/{reference}",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"payout",
+						"verify",
+						"{reference}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "walletbanks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/wallet/banks",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"wallet",
+						"banks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "paystackwebhook",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-paystack-signature",
+						"value": "dfsfgfgsdfgsdfgsd",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{live_url}}/webhooks/paystack",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"webhooks",
+						"paystack"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rating",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"comment\": \"super nice doctor\",\r\n  \"star\": 4,\r\n  \"user\": \"654142729920fhejk3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/rating",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"rating"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getratings",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"doctor\": \"507f1f77bcf86cd799439011\",\r\n  \"appointmentDate\": \"2024-04-01\",\r\n  \"appointmentTime\": \"14:30\",\r\n  \"duration\": 30,\r\n  \"type\": \"TEXT_CHAT\",\r\n  \"reason\": \"Regular checkup\",\r\n  \"notes\": \"Patient has diabetes\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctorsappointments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments/doctor?page=1&limit=15&dateFilter=today&startDate=2024-01-01&endDate=2024-12-31&status=CONFIRMED",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"doctor"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "15"
+						},
+						{
+							"key": "dateFilter",
+							"value": "today"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "status",
+							"value": "CONFIRMED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patientsappointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/patient?page=2&limit=2",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"patient"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todaysappointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/today",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"today"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAppointmentStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": \"CONFIRMED\",\r\n  \"cancellationReason\": \"Patient requested cancellation\",\r\n  \"meetingLink\": \"https://meet.google.com/abc-defg-hij\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments/{id}/status",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"{id}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DoctorsAvailability",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"availabilitySlots\": [\r\n    {\r\n      \"dayOfWeek\": \"wednesday\",\r\n      \"startTime\": \"09:00\",\r\n      \"endTime\": \"17:00\",\r\n      \"isAvailable\": true\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments/availability",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getdoctorsavailabiltiy",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "AddAvailabilityslot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dayOfWeek\": \"monday\",\r\n  \"startTime\": \"09:00\",\r\n  \"endTime\": \"17:00\",\r\n  \"isAvailable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments/availability/slot",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"availability",
+						"slot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSlot",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Deleteslot",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/availability/slot/{slotId}",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"availability",
+						"slot",
+						"{slotId}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "initiatepayment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/{id}/payment/initiate",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"{id}",
+						"payment",
+						"initiate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AppointmentPaymentConfirmation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/payment/confirm/{reference}",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"payment",
+						"confirm",
+						"{reference}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "paidAppointmentsConfirmation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/{id}/confirm",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"{id}",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifyPatientAttendance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjg1ZWQzNjhiYmU2N2ViZjg3ZTc3ODQxIiwicm9sZSI6IjY4MjAwMzZhYjlmYjEwZGEzOGU0MzlkMCJ9LCJpYXQiOjE3NTEwNDQ5OTAsImV4cCI6MTc1MTEzMTM5MH0.3iYgDS_0eVTekW_ADjbZx4vR-1Ft68eyYQlInzqc3p8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientOtp\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments/{id}/verify-patient-attendance",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"{id}",
+						"verify-patient-attendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifyDoctorAttendance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"doctorOtp\": \"654321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/appointments/{id}/verify-doctor-attendance",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"{id}",
+						"verify-doctor-attendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExpireUnpaid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/admin/expire-unpaid",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"admin",
+						"expire-unpaid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TestPaystackConnection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/test/paystack-connection",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"test",
+						"paystack-connection"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PaystackConnection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/appointments/webhook/paystack",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"appointments",
+						"webhook",
+						"paystack"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewChatWithdoctor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"doctorId\": \"507f1f77bcf86cd799439011\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/chat",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllChatsForCurrentUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/chat",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getmessageforachat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/chat/{chatId}/messages/?limit=50&before=before'",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"chat",
+						"{chatId}",
+						"messages",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "50"
+						},
+						{
+							"key": "before",
+							"value": "before'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetParticipantForAChat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/chat/{chatId}/messages",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"chat",
+						"{chatId}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserNotificationPreference",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/notifications/preferences",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"notifications",
+						"preferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateNotificationsPreferneces",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patientAlerts\": true,\r\n  \"clinicalUpdates\": true,\r\n  \"communityEngagement\": true,\r\n  \"earningsAndRewards\": true,\r\n  \"emailNotifications\": true,\r\n  \"smsNotifications\": true,\r\n  \"doNotReceiveAny\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/notifications/preferences",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"notifications",
+						"preferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsersNotifications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/notifications?offset=1&limit=50",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"notifications"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "50"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUnreadNotificationCount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/notifications/unread-count",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"notifications",
+						"unread-count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MarkRead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/notifications/{id}/mark-read",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"notifications",
+						"{id}",
+						"mark-read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MarkAllRead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/notifications/mark-all-read",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"notifications",
+						"mark-all-read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Language",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/language?page=2&limit=2",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"language"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Languageid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/language/{id}",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"language",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminDashboard",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAdmin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"email\": \"john.doe@novainhealth.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/admin/create-admin",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"admin",
+						"create-admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminTransactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/admin/transactions?page=1&limit=20&search=john&startDate=2024-01-01&endDate=2024-12-31&status=ACTIVE&isDeleted=false'",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"admin",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "john"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						},
+						{
+							"key": "isDeleted",
+							"value": "false'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllDoctors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/admin/doctors?page=1&limit=20&search=john&startDate=2024-01-01&endDate=2024-12-31&status=ACTIVE&isDeleted=false'",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"admin",
+						"doctors"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "john"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						},
+						{
+							"key": "isDeleted",
+							"value": "false'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPatients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/admin/doctors?page=1&limit=20&search=john&startDate=2024-01-01&endDate=2024-12-31&status=ACTIVE&isDeleted=false'",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"admin",
+						"doctors"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "john"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						},
+						{
+							"key": "isDeleted",
+							"value": "false'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllAppointments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{live_url}}/admin/appointments?page=1&limit=20&search=john&startDate=2024-01-01&endDate=2024-12-31&status=ACTIVE&isDeleted=false'",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"admin",
+						"appointments"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "search",
+							"value": "john"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						},
+						{
+							"key": "isDeleted",
+							"value": "false'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VerifyDoctor",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{live_url}}/admin/doctors/{id}/verify",
+					"host": [
+						"{{live_url}}"
+					],
+					"path": [
+						"admin",
+						"doctors",
+						"{id}",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

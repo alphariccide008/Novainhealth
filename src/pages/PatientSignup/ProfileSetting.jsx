@@ -1,5 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import '../../components/components.css'
+import { useApiIntegration } from '../../hooks/useApiIntegration'
+import toast from 'react-hot-toast'
 import PatientSidebar from '../../components/PatientSidebar'
 import Image from '../../assets/images/googlelog.png'
 import Heartbeat from '../../assets/images/heartbeat.png'
@@ -23,6 +25,46 @@ import { FaUserCircle } from 'react-icons/fa';
 
 const ProfileSetting = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [profileData, setProfileData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        dateOfBirth: '',
+        gender: '',
+        address: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        country: '',
+        genotype: '',
+        weight: '',
+        height: '',
+        bloodGroup: '',
+        medicalCondition: '',
+        allergies: []
+    });
+    const { updatePatientProfile } = useApiIntegration();
+
+    const handleInputChange = (e) => {
+        setProfileData({
+            ...profileData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSaveChanges = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            await updatePatientProfile(profileData);
+        } catch (error) {
+            console.error('Failed to update profile:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
   return (
     <>
     <div
@@ -176,11 +218,25 @@ const ProfileSetting = () => {
             </div>
             <div className="flex-col md:w-[50%] ">
                 <h1 className='text-[16px] py-5'>Personal Information</h1>
-                <form action="" className='space-y-9 text-[12px]'>
+                <form onSubmit={handleSaveChanges} className='space-y-9 text-[12px]'>
                     <div className='md:flex gap-3'>
-                        <input type="text"  className='border my-3 w-full flex-col md:w-1/2 px-4 py-2' placeholder='First Name'/>
+                        <input 
+                          type="text" 
+                          name="firstName"
+                          value={profileData.firstName}
+                          onChange={handleInputChange}
+                          className='border my-3 w-full flex-col md:w-1/2 px-4 py-2' 
+                          placeholder='First Name'
+                        />
                       
-                        <input type="text"  className='border my-3 w-full flex-col md:w-1/2 px-4 py-2' placeholder='Last Name'/>
+                        <input 
+                          type="text" 
+                          name="lastName"
+                          value={profileData.lastName}
+                          onChange={handleInputChange}
+                          className='border my-3 w-full flex-col md:w-1/2 px-4 py-2' 
+                          placeholder='Last Name'
+                        />
                     </div>
                     <div className='md:flex gap-3'>
                         <input type="text"  className='border my-3 w-full flex-col md:w-1/2 px-4 py-2' placeholder='Email'/>
@@ -233,10 +289,17 @@ const ProfileSetting = () => {
                  
             
                     <div className='gap-4 w-full pb-10 flex justify-center'>
-                        <Link to='' className='bg-[#46B8E3] text-white text-[12px] rounded px-10 py-3'>
-                            Save changes
-                        </Link>
-                       
+                        <button 
+                          type="submit" 
+                          disabled={loading}
+                          className={`text-white text-[12px] rounded px-10 py-3 ${
+                            loading 
+                              ? 'bg-gray-400 cursor-not-allowed' 
+                              : 'bg-[#46B8E3] hover:bg-blue-600'
+                          }`}
+                        >
+                            {loading ? 'Saving...' : 'Save changes'}
+                        </button>
                     </div>
                 </form>
             </div>

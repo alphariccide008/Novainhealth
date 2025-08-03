@@ -1,4 +1,6 @@
-import React from "react"
+import React, { useState, useEffect } from 'react'
+import { useApiIntegration } from '../../hooks/useApiIntegration'
+import toast from 'react-hot-toast'
 import AdminSidebar from '../../components/AdminSidebar'
 import '../../components/components.css'
 import { EyeSlashIcon } from '@heroicons/react/24/solid'
@@ -44,7 +46,7 @@ const AdminSpecialty = () => {
                             <th className=" px-3 md:px-4 py-2">#</th>
                             <th className=" px-3 md:px-4 py-2">Specialties</th>
                             <th className=" px-3 md:px-4 py-2">Actions</th>
-                            
+
 
                         </tr>
                         </thead>
@@ -55,20 +57,20 @@ const AdminSpecialty = () => {
                             <td className=" px-3 md:px-4 py-2">
                                 <div className="md:flex space-y-3">
                                     <div className="flex-col ">
-                                  
+
                                         <Link className="eye px-2 rounded text-[#021140] md:mx-2 text-[12px] flex"><EyeSlashIcon className="w-3  "/> <span className=" p-2">View</span></Link>
-                             
+
                                     </div>
                                     <div className="flex-col">
-                                    
-                                    
+
+
                                         <Link className="accept px-2 rounded text-[#0B6E4F]  md:mx-2 text-[12px] flex"><EyeSlashIcon className="w-3 "/> <span className="  p-2">Accept</span></Link>
-                             
+
                                     </div>
                                     <div className="flex-col">
-                                    
+
                                         <Link className="cancel px-2 rounded text-[#C52184] md:mx-2 text-[12px] flex"><EyeSlashIcon className="w-3 "/> <span className="  p-2">Cancel</span></Link>
-                                
+
                                     </div>
                                 </div>
                             </td>
@@ -80,34 +82,34 @@ const AdminSpecialty = () => {
                             <td className=" px-3 md:px-4 py-2">
                                 <div className="md:flex ">
                                     <div className="flex-col my-2">
-                                  
+
                                         <Link className="eye px-2 rounded text-[#021140] md:mx-2 text-[12px] flex"><EyeSlashIcon className="w-3  "/> <span className=" p-2">View</span></Link>
-                             
+
                                     </div>
                                     <div className="flex-col my-2">
-                                    
-                                    
+
+
                                         <Link className="accept px-2 rounded text-[#0B6E4F]  md:mx-2 text-[12px] flex"><EyeSlashIcon className="w-3 "/> <span className="  p-2">Accept</span></Link>
-                             
+
                                     </div>
                                     <div className="flex-col my-2">
-                                    
+
                                         <Link className="cancel px-2 rounded text-[#C52184] md:mx-2 text-[12px] flex"><EyeSlashIcon className="w-3 "/> <span className="  p-2">Cancel</span></Link>
-                                
+
                                     </div>
                                 </div>
                             </td>
 
                         </tr>
-                       
+
                         </tbody>
                     </table>
                     </div>
 
-                   
+
                 </div>
 
-                
+
 
             </div>
        </div>

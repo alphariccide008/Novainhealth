@@ -1,438 +1,668 @@
-import React, {useState} from 'react'
-import DocSideBar from '../../components/DocSideBar'
-import Client from '../../assets/images/googlelog.png'
-import { FaReply } from 'react-icons/fa';
+import React, { useState, useEffect, useCallback } from "react";
+import { useApiIntegration } from "../../hooks/useApiIntegration";
+import { doctorAPI } from "../../services/doctorApi";
+import DocSideBar from "../../components/DocSideBar";
+import { useDropzone } from "react-dropzone";
+import dayjs from "dayjs";
+import toast from 'react-hot-toast';
+
+// Reusable Components
+const Input = ({ label, ...rest }) => (
+  <div className="w-full md:w-1/3 p-1">
+    <label className="block text-xs text-gray-600">{label}</label>
+    <input {...rest} className="w-full border rounded p-2 text-sm"/>
+  </div>
+);
+
+const TextArea = ({ label, ...rest }) => (
+  <div className="w-full p-1">
+    <label className="block text-xs text-gray-600">{label}</label>
+    <textarea {...rest} className="w-full border rounded p-2 text-sm" rows={3}/>
+  </div>
+);
+
+const AddDeleteButtons = ({onAdd, onDelete}) => (
+  <div className="flex items-center gap-2 mt-2">
+    <button type="button" className="bg-blue-600 text-white px-2 py-1 rounded" onClick={onAdd}>+ Add</button>
+    {onDelete && <button type="button" className="bg-red-500 text-white px-2 py-1 rounded" onClick={onDelete}>× Delete</button>}
+  </div>
+);
+
+const MultiDropzone = ({ files, onDrop, onRemove, label }) => {
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+    onDrop, 
+    accept:{"image/*":[]}, 
+    multiple:true
+  });
+  
+  return (
+    <div className="w-full p-1">
+      {label && <label className="block text-xs text-gray-600">{label}</label>}
+      <div {...getRootProps()} className="border-dashed border-2 p-4 text-center text-sm text-gray-500 cursor-pointer">
+        <input {...getInputProps()} />
+        {isDragActive ? "Drop images here..." : "Drag or click to upload images"}
+      </div>
+      <div className="flex flex-wrap gap-2 mt-2">
+        {files.map((file, idx) => (
+          <div key={idx} className="relative w-20 h-20 border rounded overflow-hidden">
+            <img 
+              src={typeof file === 'string' ? file : URL.createObjectURL(file)} 
+              alt="preview" 
+              className="w-full h-full object-cover"
+            />
+            <button 
+              type="button" 
+              className="absolute top-0 right-0 bg-red-500 text-xs text-white px-1" 
+              onClick={() => onRemove(typeof file === 'string' ? file : file.name)}
+            >
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const LicenseEntry = ({ lic, onChange, onAdd, onDelete }) => {
+  const onDrop = useCallback(accepted => {
+    onChange({ ...lic, images: [...lic.images, ...accepted] });
+  }, [lic, onChange]);
+  
+  const removeImage = name => onChange({ 
+    ...lic, 
+    images: lic.images.filter(f => 
+      typeof f === 'string' ? f !== name : f.name !== name
+    ) 
+  });
+  
+  return (
+    <div className="border p-3 mb-4">
+      <Input 
+        label="Registration" 
+        value={lic.registration} 
+        onChange={e => onChange({...lic, registration: e.target.value})}
+      />
+      <Input 
+        label="Year" 
+        type="number" 
+        value={lic.year} 
+        onChange={e => onChange({...lic, year: e.target.value})}
+      />
+      <MultiDropzone 
+        files={lic.images} 
+        onDrop={onDrop} 
+        onRemove={removeImage} 
+        label="License Images"
+      />
+      <div className="flex justify-end">
+        <AddDeleteButtons onAdd={onAdd} onDelete={onDelete}/>
+      </div>
+    </div>
+  );
+};
+
+const DoctorProfile = () => {
+  const { loading, toastSuccess, toastError } = useApiIntegration();
+  const [profileData, setProfileData] = useState({
+    // Basic Info
+    firstName: "",
+    lastName: "",
+    countryCode: "",
+    phoneNumber: "",
+    gender: "",
+    dob: "",
+    maritalStatus: "",
+    profilePhoto: null,
+    
+    // About & Clinic
+    aboutMe: "",
+    clinicName: "",
+    clinicAddress: "",
+    clinicImages: [],
+    contactDetails: "",
+    pricing: "",
+    
+    // Consultation Fees
+    consultationFees: {
+      textConsultation: "", 
+      audioConsultation: "",
+      videoConsultation: "", 
+      followUpConsultation: "",
+      emergencyConsultation: ""
+    },
+    
+    // Arrays
+    services: [],
+    education: [{college:"", yearStarted:"", yearFinished:"", degree:""}],
+    awards: [{nameOfAward:"", year:""}],
+    memberships: [{nameOfOrganisation:""}],
+    licenses: [{registration:"", year:"", images:[]}]
+  });
+  
+  const [specInput, setSpecInput] = useState("");
+
+  // Load profile data on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await doctorAPI.getProfile();
+        if (response.data) {
+          // Transform API data to match our state structure
+          const data = response.data;
+          setProfileData({
+            firstName: data.firstName || "",
+            lastName: data.lastName || "",
+            countryCode: data.phone?.countryCode || "",
+            phoneNumber: data.phone?.phoneNumber || "",
+            gender: data.gender || "",
+            dob: data.dateOfBirth ? dayjs(data.dateOfBirth).format('YYYY-MM-DD') : "",
+            maritalStatus: data.maritalStatus || "",
+            profilePhoto: data.profilePhoto || null,
+            
+            aboutMe: data.aboutMe || "",
+            clinicName: data.clinicInfo?.clinicName || "",
+            clinicAddress: data.clinicInfo?.clinicAddress || "",
+            clinicImages: data.clinicInfo?.clinicImages || [],
+            contactDetails: data.contactDetails || "",
+            pricing: data.pricing || "",
+            
+            consultationFees: data.consultationFees || {
+              textConsultation: "", 
+              audioConsultation: "",
+              videoConsultation: "", 
+              followUpConsultation: "",
+              emergencyConsultation: ""
+            },
+            
+            services: data.servicesAndSpecialization || [],
+            education: data.education?.length ? data.education : [{college:"", yearStarted:"", yearFinished:"", degree:""}],
+            awards: data.awards?.length ? data.awards : [{nameOfAward:"", year:""}],
+            memberships: data.memberships?.length ? data.memberships : [{nameOfOrganisation:""}],
+            licenses: data.registrationAndLicenses?.length ? 
+              data.registrationAndLicenses.map(lic => ({
+                registration: lic.registration || "",
+                year: lic.year || "",
+                images: lic.documentImage ? [lic.documentImage] : []
+              })) : 
+              [{registration:"", year:"", images:[]}]
+          });
+        }
+      } catch (err) {
+        console.log("Failed to fetch profile:", err);
+        }
+    };
+    
+    fetchProfile();
+  }, []);
+
+  // Profile photo dropzone
+  const profDrop = useDropzone({
+    onDrop: accepted => setProfileData(prev => ({
+      ...prev,
+      profilePhoto: accepted[0]
+    })),
+    accept: {"image/*":[]}, 
+    multiple:false
+  });
+
+  const handleInputChange = (field, value) => {
+    setProfileData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleNestedChange = (parentField, field, value) => {
+    setProfileData(prev => ({
+      ...prev,
+      [parentField]: {
+        ...prev[parentField],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleArrayChange = (field, index, value) => {
+    setProfileData(prev => {
+      const newArray = [...prev[field]];
+      newArray[index] = value;
+      return { ...prev, [field]: newArray };
+    });
+  };
+
+  const handleAddArrayItem = (field, newItem) => {
+    setProfileData(prev => ({
+      ...prev,
+      [field]: [...prev[field], newItem]
+    }));
+  };
+
+  const handleRemoveArrayItem = (field, index) => {
+    setProfileData(prev => ({
+      ...prev,
+      [field]: prev[field].filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleAddService = () => {
+    if (specInput.trim()) {
+      setProfileData(prev => ({
+        ...prev,
+        services: [...prev.services, specInput.trim()]
+      }));
+      setSpecInput("");
+    }
+  };
+
+  const handleRemoveService = (index) => {
+    setProfileData(prev => ({
+      ...prev,
+      services: prev.services.filter((_, i) => i !== index)
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const form = new FormData();
+
+      // Basic Info
+      form.append("firstName", profileData.firstName);
+      form.append("lastName", profileData.lastName);
+      form.append("phone[countryCode]", profileData.countryCode);
+      form.append("phone[phoneNumber]", profileData.phoneNumber);
+      form.append("gender", profileData.gender);
+      form.append("dateOfBirth", profileData.dob);
+      form.append("maritalStatus", profileData.maritalStatus);
+      if (
+        profileData.profilePhoto &&
+        typeof profileData.profilePhoto !== "string"
+      ) {
+        form.append("profilePhoto", profileData.profilePhoto);
+      }
+
+      // About & Clinic
+      form.append("aboutMe", profileData.aboutMe);
+      form.append("clinicInfo[clinicName]", profileData.clinicName);
+      form.append("clinicInfo[clinicAddress]", profileData.clinicAddress);
+      profileData.clinicImages.forEach((f, i) => {
+        if (typeof f !== "string") {
+          form.append("clinicInfo[clinicImages]", f);
+        }
+      });
+
+      form.append("contactDetails", profileData.contactDetails);
+      form.append("pricing", profileData.pricing);
+
+      // Consultation Fees
+      Object.entries(profileData.consultationFees).forEach(([k, v]) => {
+        form.append(`consultationFees[${k}]`, v);
+      });
+
+      // Services
+      form.append(
+        "servicesAndSpecialization",
+        JSON.stringify(profileData.services)
+      );
+
+      // Education
+      profileData.education.forEach((ed, i) => {
+        form.append(`education[${i}][college]`, ed.college);
+        form.append(`education[${i}][yearStarted]`, ed.yearStarted);
+        form.append(`education[${i}][yearFinished]`, ed.yearFinished);
+        form.append(`education[${i}][degree]`, ed.degree);
+      });
+
+      // Awards
+      profileData.awards.forEach((a, i) => {
+        form.append(`awards[${i}][nameOfAward]`, a.nameOfAward);
+        form.append(`awards[${i}][year]`, a.year);
+      });
+
+      // Memberships
+      profileData.memberships.forEach((m, i) => {
+        form.append(
+          `memberships[${i}][nameOfOrganisation]`,
+          m.nameOfOrganisation
+        );
+      });
+
+      // Licenses
+      profileData.licenses.forEach((lic, i) => {
+        form.append(
+          `registrationAndLicenses[${i}][registration]`,
+          lic.registration
+        );
+        form.append(`registrationAndLicenses[${i}][year]`, lic.year);
+        lic.images.forEach((f) => {
+          if (typeof f !== "string") {
+            form.append(`registrationAndLicenses[${i}][documentImage]`, f);
+          }
+        });
+      });
 
 
-const DoctorPatients = () => {
-    const [rating, setRating] = useState(0);        // Selected rating
-    const [hover, setHover] = useState(0);          // 
+      
+
+      // --- SEND TO API ---
+      const response = await doctorAPI.updateProfile(form);
+      const resData = response?.data || response;
+      console.log(resData)
+
+      // --- CHECK STATUS ---
+      if (resData?.status === "Success") {
+        const name = resData?.data?.firstName + " " + resData?.data?.lastName;
+        const updatedAt = resData?.data?.updatedAt || "N/A";
+        const msg = `✅ Profile Saved\nName: ${name}\nUpdated At: ${updatedAt}`;
+        alert(msg);
+        toast.success("Profile saved successfully!");
+      } else {
+        const errMsg = resData?.message || "Unexpected error from server.";
+        alert("❌ Failed:\n" + errMsg);
+        toast.error(errMsg);
+      }
+    } catch (err) {
+      console.log("Profile save error:", err);
+
+      const errorData = err?.response?.data;
+      let errorMessage = "Failed to save profile";
+
+      if (Array.isArray(errorData?.message)) {
+        errorMessage = errorData.message.join("\n");
+      } else if (typeof errorData?.message === "string") {
+        errorMessage = errorData.message;
+      }
+
+      alert("❌ Error:\n" + errorMessage);
+      toast.error(errorMessage);
+    }
+  };
+
   return (
     <>
+      <div className="fixed top-0 w-full bg-blue-900 text-white p-4 z-10">
+        <h1 className="text-lg">Doctor Profile</h1>
+      </div>
+      <section className="pt-20 bg-gray-100 min-h-screen pb-10">
+        <div className="flex mx-4 gap-4">
+          <DocSideBar />
+          <form onSubmit={handleSubmit} className="bg-white p-6 flex-1 rounded space-y-6">
+            {/* Basic Info */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Input 
+                label="First Name" 
+                value={profileData.firstName} 
+                onChange={e => handleInputChange('firstName', e.target.value)}
+              />
+              <Input 
+                label="Last Name" 
+                value={profileData.lastName} 
+                onChange={e => handleInputChange('lastName', e.target.value)}
+              />
+              <Input 
+                label="Country Code" 
+                value={profileData.countryCode} 
+                onChange={e => handleInputChange('countryCode', e.target.value)}
+              />
+              <Input 
+                label="Phone Number" 
+                value={profileData.phoneNumber} 
+                onChange={e => handleInputChange('phoneNumber', e.target.value)}
+              />
+              <select 
+                className="border rounded p-2" 
+                value={profileData.gender} 
+                onChange={e => handleInputChange('gender', e.target.value)}
+              >
+                <option value="">Gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+              </select>
+              <Input 
+                label="Date of Birth" 
+                type="date" 
+                value={profileData.dob} 
+                onChange={e => handleInputChange('dob', e.target.value)}
+              />
+              <select 
+                className="border rounded p-2" 
+                value={profileData.maritalStatus} 
+                onChange={e => handleInputChange('maritalStatus', e.target.value)}
+              >
+                <option value="">Marital Status</option>
+                <option value="SINGLE">Single</option>
+                <option value="MARRIED">Married</option>
+              </select>
+              <div {...profDrop.getRootProps()} className="border-dashed border-2 p-4 text-center">
+                <input {...profDrop.getInputProps()}/>
+                {profileData.profilePhoto ? 
+                  (typeof profileData.profilePhoto === 'string' ? 
+                    "Profile photo uploaded" : 
+                    profileData.profilePhoto.name) : 
+                  "Upload Profile Photo"}
+              </div>
+            </div>
 
-        <div  className=" relative text-white px-[4%] lg:px-[7%] md:pt-[10%] pt-[25%] lg:pb-5"
-            style={{ position: "fixed", width: "100%", backgroundColor: "#021140", minHeight:"100px",  }}>
-            <h3 className='pt-3 text-[12px] md:text-14px'>Home / Bio</h3>
-            <h1 className='text-[22px] md:text-[24px]  py-2 font-semibold'>Bio</h1>
-        </div>
-        <section className='md:py-[20%]  lg:top-[15%]  py-[50%] w-full bg-[#e2e2e2]'>
-        <div className="flex md:mx-[2%]  ">
-        <DocSideBar/>
-          <div className=' pt-10 px-5  md:mx-2 border w-full rounded'>
-            <form action="">
-               
-                <div className="rounded px-4 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Basic Information</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>First Name</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Phone Number</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Gender</label>
-
-                            <select className="text-[14px] md:w-[70%] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]" name="" id="">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Last Name</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Email</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Date of Birth</label>
-
-                            <select className="text-[14px] md:w-[70%] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]" name="" id="">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div className="rounded my-8 px-4 py-10 bg-white">
-                
-                <div className=" ">
-                <h1 className='px-3 text-[18px] py-5 font-bold'>About Me</h1>
-                    
-                    <textarea name="" className='className="text-[14px] rounded p-2 cursor-pointer h-[250px]  border border-gray-300 flex w-full items-center justify-center text-gray-700  text-[10px]"' id=""></textarea>
-                    
-                </div>
-                </div>
-
-                <div className="rounded px-4 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Clinic Info</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Clinic Name</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Clinic Address</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="my-5 px-3">
-                            
-                            < input
-                                className="text-[14px] text-center rounded p-2 cursor-pointer bg-white border border-dashed border-gray-300 h-[200px] flex w-full items-center justify-center bg-[#D9D9D966] text-gray-700 hover:text-white text-[10px]" type='file' placeholder='Drag files here to upload'
-                            />
-                        </div>
-                </div>
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Contact Details</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Address Line 1</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>city</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Phone Number</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                       
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Address Line 2</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>State/ Province</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Postal Code</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Contact Details</h1>
-                <div className="md ">
-                    
-                    <div className="px-3 ">
-                    
-                    <div className="my-5 flex">
-                        <div className='m-3'>
-                           
-                            <input
-                            type='radio'
-                            name='addressOption' 
-                            className="text-[14px] mx-3 rounded p-2 cursor-pointer  text-[#46B8E3]"
-                            />
-                             <label className='text-[12px] text-[#757575]'> Free</label>
-                        </div>
-
-                        <div className='m-3'>
-                            <input
-                            type='radio'
-                            name='addressOption'  
-                            className="text-[14px] mx-3 rounded p-2 cursor-pointer text-gray-700"
-                            />
-                            <label className='text-[12px] text-[#757575]'>Custom Price (per hour)</label>
-
-                        </div>
-                        </div>
-                        
-                
-                    </div>
-                   
-                </div>
-                </div>
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Services and Speculations</h1>
-                <div className="md ">
-                    <h1 className='px-3 py-2 text-[12px] text-[#757575]'>Services</h1>
-                    <div className="px-3 ">
-                    
-                    <div className="my-3 border text-[12px] flex">
-                        <div className='m-3 '>
-                           
-                            <div className='border rounded px-3 py-2 bg-[#46B8E3] text-white'>
-                                <h1  >Touch Cleaning <a href="@">x</a></h1>
-                            </div>
-                        </div>
-
-                        <div className='m-3'>
-                        <div className='border rounded px-3 py-2 bg-[#46B8E3] text-white'>
-                                <h1 >Teeth Whitening <a href="@">x</a></h1>
-                            </div>
-
-                        </div>
-                        
-                        </div>
-                        <p className='text-[8px] text-[#757575]'>NB: Type and Press Enter to add new service</p>
-                        
-                
-                    </div>
-                   
-                </div>
-                <div className="md mt-10 ">
-                    <h1 className='px-3 py-2 text-[12px] text-[#757575]'>Services</h1>
-                    <div className="px-3 ">
-                    
-                    <div className="my-3 border text-[12px] flex">
-                        <div className='m-3'> 
-                           
-                            <div className='border rounded px-3 py-2 bg-[#46B8E3] text-white'>
-                                <h1 >Children Care <a href="@">x</a></h1>
-                            </div>
-                        </div>
-
-                        <div className='m-3'>
-                        <div className='border rounded px-3 py-2 bg-[#46B8E3] text-white'>
-                                <h1 >Dental Care <a href="@">x</a></h1>
-                            </div>
-
-                        </div>
-                        
-                        </div>
-                        <p className='text-[8px] text-[#757575]'>NB: Type and Press Enter to add new service</p>
-                        
-                
-                    </div>
-                   
-                </div>
-                </div>
-
-
-
-                {/* Education  */}
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Education</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>College / Institute</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Year Started</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                       
-                       
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Degree Obtained </label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Year of Completion</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                     
-                    </div>
-                </div>
-                <div x>
-                    <div className='text-[#46B8E3]'><a style={{ borderRadius:'50%'}} href="" className='bg-[#46B8E3] rounded-full text-white pb-[2px] px-[4px] object-cover mx-2'>+</a> Add More</div>
-                </div>
-                </div>
-
-                {/* Work Experience */}
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Work Experience</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Hospital</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>From</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                       
-                       
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Designation </label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>To</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                     
-                    </div>
-                </div>
-                <div x>
-                    <div className='text-[#46B8E3]'><a style={{ borderRadius:'50%'}} href="" className='bg-[#46B8E3] rounded-full text-white pb-[2px] px-[4px] object-cover mx-2'>+</a> Add More</div>
-                </div>
-                </div>
-
-                {/* Awards */}
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Awards</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Names of Award</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Year </label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        
-                     
-                    </div>
-                </div>
-                <div x>
-                    <div className='text-[#46B8E3]'><a style={{ borderRadius:'50%'}} href="" className='bg-[#46B8E3] rounded-full text-white pb-[2px] px-[4px] object-cover mx-2'>+</a> Add More</div>
-                </div>
-                </div>
-
-                {/* Memberships */}
-                <div className="rounded px-4 my-3 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Memberships</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Names of Organization</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                    </div>
-                    
-                </div>
-                <div x>
-                    <div className='text-[#46B8E3]'><a style={{ borderRadius:'50%'}} href="" className='bg-[#46B8E3] rounded-full text-white pb-[2px] px-[4px] object-cover mx-2'>+</a> Add More</div>
-                </div>
-                </div>
-                
-                {/* License */}
-
-                <div className="rounded px-4 py-10 bg-white">
-                    <h1 className='px-3 text-[18px] font-bold'>Registration and License</h1>
-                <div className="md:flex ">
-                    
-                    <div className="flex-col px-3 md:w-1/2">
-                    
-                    <div className="my-5 ">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Registration</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                        
-                    </div>
-                    <div className="flex-col px-3 md:w-1/2">
-                    <div className=" my-5">
-                            <label htmlFor="" className='text-[12px] text-[#757575]'>Year</label>
-                            < input
-                                className="text-[14px] rounded p-2 cursor-pointer bg-white border border-gray-300 flex w-full items-center justify-center text-gray-700 hover:text-white text-[10px]"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="my-5 px-3">
-                            
-                            < input
-                                className="text-[14px] text-center rounded p-2 cursor-pointer bg-white border border-dashed border-gray-300 h-[200px] flex w-full items-center justify-center bg-[#D9D9D966] text-gray-700 hover:text-white text-[10px]" type='file' placeholder='Drag files here to upload'
-                            />
-                        </div>
-                        <div x>
-                    <div className='text-[#46B8E3]'><a style={{ borderRadius:'50%'}} href="" className='bg-[#46B8E3] rounded-full text-white pb-[2px] px-[4px] object-cover mx-2'>+</a> Add More</div>
-                </div>
-                </div>
-                <button type='submit' className='rounded border bg-[#46B8E3] text-white  mt-6 py-3 px-14'>
-                    Save Changes
-                </button>
-
-            </form>
+            {/* About & Clinic */}
+            <TextArea 
+              label="About Me" 
+              value={profileData.aboutMe} 
+              onChange={e => handleInputChange('aboutMe', e.target.value)}
+            />
             
-          </div>
+            <h2 className="font-bold text-lg">Clinic Info</h2>
+            <Input 
+              label="Clinic Name" 
+              value={profileData.clinicName} 
+              onChange={e => handleInputChange('clinicName', e.target.value)}
+            />
+            <Input 
+              label="Clinic Address" 
+              value={profileData.clinicAddress} 
+              onChange={e => handleInputChange('clinicAddress', e.target.value)}
+            />
+            <MultiDropzone 
+              files={profileData.clinicImages} 
+              onDrop={accepted => handleInputChange('clinicImages', [...profileData.clinicImages, ...accepted])} 
+              onRemove={name => handleInputChange('clinicImages', profileData.clinicImages.filter(f => 
+                typeof f === 'string' ? f !== name : f.name !== name
+              ))}
+            />
+
+            <TextArea 
+              label="Contact Details" 
+              value={profileData.contactDetails} 
+              onChange={e => handleInputChange('contactDetails', e.target.value)}
+            />
+            <TextArea 
+              label="Pricing" 
+              value={profileData.pricing} 
+              onChange={e => handleInputChange('pricing', e.target.value)}
+            />
+
+            {/* Consultation Fees */}
+            <div className="grid md:grid-cols-3 gap-4">
+              {Object.entries(profileData.consultationFees).map(([k,v]) => (
+                <Input 
+                  key={k} 
+                  label={k.replace(/Consultation$/, " Consult")} 
+                  type="number" 
+                  value={v} 
+                  onChange={e => handleNestedChange('consultationFees', k, e.target.value)}
+                />
+              ))}
+            </div>
+
+            {/* Services & Specializations */}
+            <div>
+              <label className="block text-xs text-gray-600">Services & Specializations</label>
+              <div className="flex gap-2 flex-wrap">
+                {profileData.services.map((s, i) => (
+                  <span key={i} className="bg-blue-500 text-white px-2 py-1 rounded flex items-center">
+                    {s} 
+                    <button 
+                      type="button" 
+                      onClick={() => handleRemoveService(i)} 
+                      className="ml-1"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+              <div className="flex mt-2">
+                <input
+                  type="text"
+                  value={specInput}
+                  placeholder="Type service and click Add"
+                  className="w-full border rounded p-2 text-sm"
+                  onChange={e => setSpecInput(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddService}
+                  className="ml-2 bg-blue-500 text-white px-3 rounded"
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+
+            {/* Education */}
+            <div>
+              <h2 className="font-bold text-lg">Education</h2>
+              {profileData.education.map((ed, i) => (
+                <div key={i} className="flex gap-2 flex-wrap">
+                  <Input 
+                    label="College" 
+                    value={ed.college} 
+                    onChange={e => handleArrayChange('education', i, {
+                      ...ed,
+                      college: e.target.value
+                    })}
+                  />
+                  <Input 
+                    label="Year Started" 
+                    type="number" 
+                    value={ed.yearStarted} 
+                    onChange={e => handleArrayChange('education', i, {
+                      ...ed,
+                      yearStarted: e.target.value
+                    })}
+                  />
+                  <Input 
+                    label="Year Finished" 
+                    type="number" 
+                    value={ed.yearFinished} 
+                    onChange={e => handleArrayChange('education', i, {
+                      ...ed,
+                      yearFinished: e.target.value
+                    })}
+                  />
+                  <Input 
+                    label="Degree" 
+                    value={ed.degree} 
+                    onChange={e => handleArrayChange('education', i, {
+                      ...ed,
+                      degree: e.target.value
+                    })}
+                  />
+                  <AddDeleteButtons 
+                    onAdd={() => handleAddArrayItem('education', {
+                      college: "",
+                      yearStarted: "",
+                      yearFinished: "",
+                      degree: ""
+                    })} 
+                    onDelete={() => handleRemoveArrayItem('education', i)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Awards */}
+            <div>
+              <h2 className="font-bold text-lg">Awards</h2>
+              {profileData.awards.map((a, i) => (
+                <div key={i} className="flex gap-2 items-end flex-wrap">
+                  <Input 
+                    label="Award" 
+                    value={a.nameOfAward} 
+                    onChange={e => handleArrayChange('awards', i, {
+                      ...a,
+                      nameOfAward: e.target.value
+                    })}
+                  />
+                  <Input 
+                    label="Year" 
+                    type="number" 
+                    value={a.year} 
+                    onChange={e => handleArrayChange('awards', i, {
+                      ...a,
+                      year: e.target.value
+                    })}
+                  />
+                  <AddDeleteButtons 
+                    onAdd={() => handleAddArrayItem('awards', {
+                      nameOfAward: "",
+                      year: ""
+                    })} 
+                    onDelete={() => handleRemoveArrayItem('awards', i)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Memberships */}
+            <div>
+              <h2 className="font-bold text-lg">Memberships</h2>
+              {profileData.memberships.map((m, i) => (
+                <div key={i} className="flex gap-2 items-end flex-wrap">
+                  <Input 
+                    label="Organization" 
+                    value={m.nameOfOrganisation} 
+                    onChange={e => handleArrayChange('memberships', i, {
+                      ...m,
+                      nameOfOrganisation: e.target.value
+                    })}
+                  />
+                  <AddDeleteButtons 
+                    onAdd={() => handleAddArrayItem('memberships', {
+                      nameOfOrganisation: ""
+                    })} 
+                    onDelete={() => handleRemoveArrayItem('memberships', i)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Licenses */}
+            <div>
+              <h2 className="font-bold text-lg">Registration & Licenses</h2>
+              {profileData.licenses.map((lic, i) => (
+                <LicenseEntry
+                  key={i}
+                  lic={lic}
+                  onChange={newLic => handleArrayChange('licenses', i, newLic)}
+                  onAdd={() => handleAddArrayItem('licenses', {
+                    registration: "",
+                    year: "",
+                    images: []
+                  })}
+                  onDelete={() => handleRemoveArrayItem('licenses', i)}
+                />
+              ))}
+            </div>
+
+            <button 
+              type="submit" 
+              disabled={loading} 
+              className={`w-full py-3 text-white rounded ${loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"}`}
+            >
+              {loading ? "Saving..." : "Save Profile"}
+            </button>
+          </form>
         </div>
       </section>
     </>
-    
-  )
-}
+  );
+};
 
-export default DoctorPatients
+export default DoctorProfile;
